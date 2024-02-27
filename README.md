@@ -6,7 +6,7 @@
 
 ### Requirements
 
-If you are implementing your solution in C++ you will need to have GCC 12.x and CMake 3.22.x installed on your system. You will also need to install the C/C++ ZeroMQ library and development files. On Ubuntu 22.04 you can install GCC and set it as default compiler and install ZeroMQ using the following commands:
+If you are implementing your solution in C++ you will need to have GCC 12.x and CMake 3.22.x installed on your system. You will also need to install the C/C++ ZeroMQ libraries and development files. On Ubuntu 22.04 you can install GCC, CMake and ZeroMQ, and set GCC as default compiler using the following commands:
 
 ```
 sudo apt install g++-12 gcc-12 cmake
@@ -16,12 +16,14 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 110
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-12 120
 sudo apt install libzmq3-dev libzmq5
 sudo apt install libczmq-dev libczmq4
+git submodule init
+git submodule update
 ```
 
-If you are implementing your solution in Java you will need to have Java 1.7.x and Maven 3.6.x installed on your systems. On Ubuntu 22.04 you can install Java and Maven using the following commands:
+If you are implementing your solution in Java you will need to have Java 1.7.x and Maven 3.6.x installed on your systems. You will also need to install the JeroMQ (Java ZeroMQ) library and development jar. On Ubuntu 22.04 you can install Java, Maven and JeroMQ using the following commands:
 
 ```
-sudo apt install openjdk-17-jdk maven
+sudo apt install openjdk-17-jdk maven libjeromq-java
 
 ```
 
@@ -55,7 +57,7 @@ cmake --build build
 
 To run the C++ server (after you build the project) use the following command:
 ```
-./build/file-retrieval-server
+./build/file-retrieval-server <IP address> <port> <num workers>
 > <list | quit>
 ```
 
@@ -71,7 +73,7 @@ To run the C++ client (after you build the project) use the following command:
 
 Server
 ```
-./build/file-retrieval-server
+./build/file-retrieval-server 127.0.0.1 12345 2
 >
 ```
 
@@ -96,8 +98,8 @@ Connection successful!
 Server
 ```
 > list
-client1: 127.0.0.1 5746
-client2: 127.0.0.1 9677
+client1: 127.0.0.1
+client2: 127.0.0.1
 ```
 
 **Step 4:** index files from the clients:
@@ -212,12 +214,12 @@ mvn package
 
 To run the Java server (after you build the project) use the following command:
 ```
-java -cp target/app-java-1.0-SNAPSHOT.jar csc435.app.FileRetrievalServer
+java -cp target/app-java-1.0-SNAPSHOT-jar-with-dependencies.jar csc435.app.FileRetrievalServer <IP address> <port> <num workers>
 ```
 
 To run the Java client (after you build the project) use the following command:
 ```
-java -cp target/app-java-1.0-SNAPSHOT.jar csc435.app.FileRetrievalClient
+java -cp target/app-java-1.0-SNAPSHOT-jar-with-dependencies.jar csc435.app.FileRetrievalClient
 ```
 
 #### Example (2 clients and 1 server)
@@ -226,7 +228,7 @@ java -cp target/app-java-1.0-SNAPSHOT.jar csc435.app.FileRetrievalClient
 
 Server
 ```
-java -cp target/app-java-1.0-SNAPSHOT.jar csc435.app.FileRetrievalServer
+java -cp target/app-java-1.0-SNAPSHOT-jar-with-dependencies.jar csc435.app.FileRetrievalServer 127.0.0.1 12345 2
 >
 ```
 
@@ -234,14 +236,14 @@ java -cp target/app-java-1.0-SNAPSHOT.jar csc435.app.FileRetrievalServer
 
 Client 1
 ```
-java -cp target/app-java-1.0-SNAPSHOT.jar csc435.app.FileRetrievalClient
+java -cp target/app-java-1.0-SNAPSHOT-jar-with-dependencies.jar csc435.app.FileRetrievalClient
 > connect 127.0.0.1 12345
 Connection successful!
 ```
 
 Client 2
 ```
-java -cp target/app-java-1.0-SNAPSHOT.jar csc435.app.FileRetrievalClient
+java -cp target/app-java-1.0-SNAPSHOT-jar-with-dependencies.jar csc435.app.FileRetrievalClient
 > connect 127.0.0.1 12345
 Connection successful!
 ```
@@ -251,8 +253,8 @@ Connection successful!
 Server
 ```
 > list
-client1: 127.0.0.1 5746
-client2: 127.0.0.1 9677
+client1: 127.0.0.1
+client2: 127.0.0.1
 ```
 
 **Step 4:** index files from the clients:

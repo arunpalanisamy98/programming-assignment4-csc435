@@ -31,8 +31,6 @@ public class ServerAppInterface {
 
             // if the command begins with list, list all the connected clients
             if (command.length() >= 4 && command.substring(0, 4).compareTo("list") == 0) {
-                // TO-DO call the list method from the server to retrieve the clients information
-                // print the clients information
                 engine.list();
                 continue;
             }

@@ -5,22 +5,23 @@ public class ServerSideEngine {
 
     public ServerSideEngine(IndexStore store) {
         this.store = store;
-        // TO-DO implement constructor
     }
 
-    public void initialize() {
-        // TO-DO create one dispatcher thread
+    public void initialize(String hostname, String port) {
+        Dispatcher dispatcher = new Dispatcher(store,hostname, port, 4 );
+        new Thread(dispatcher).start();
     }
 
     public void spawnWorker() {
-        // TO-DO create a new worker thread
     }
 
     public void shutdown() {
-        // TO-DO join the dispatcher and worker threads
+
     }
 
     public void list() {
-        // TO-DO get the connected clients information and return the information
+        for(String s: GlobalIndex.connectedClients){
+            System.out.println(s);
+        }
     }
 }

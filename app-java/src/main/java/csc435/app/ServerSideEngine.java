@@ -16,7 +16,7 @@ public class ServerSideEngine {
     }
 
     public void shutdown() {
-
+        System.exit(0);
     }
 
     public void list() {
